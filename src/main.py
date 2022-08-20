@@ -1,4 +1,6 @@
+from window import window
 import pygame
+import sys
 
 
 # Redraws
@@ -7,7 +9,11 @@ def redraw_game():
 
 
 def redraw_menu():
-    pass
+    # Draw background
+    win.fill(window.white)
+
+    # Update display
+    pygame.display.update()
 
 
 # Loops
@@ -16,7 +22,20 @@ def game_loop():
 
 
 def menu_loop():
-    pass
+    # Loop
+    run = True
+    while run:
+        # Event loop
+        for event in pygame.event.get():
+            # Quit detection
+            if event.type == pygame.QUIT:
+                run = False
+
+        # Update display
+        redraw_menu()
+
+    pygame.quit()
+    sys.exit()
 
 
 # Execute
@@ -24,8 +43,7 @@ if __name__ == "__main__":
     pygame.init()
     
     # Initialize window
-    win_size = (640, 640)
-    win = pygame.display.set_mode(win_size)
+    win = pygame.display.set_mode(window.rect.size)
     pygame.display.set_caption("Tic-Tac-Toe")
 
     # Execute

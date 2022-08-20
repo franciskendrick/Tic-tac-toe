@@ -1,4 +1,6 @@
 from utils import Colors
+from window import window
+from menu import Menu
 import pygame
 import sys
 
@@ -43,8 +45,11 @@ if __name__ == "__main__":
     pygame.init()
     
     # Initialize window
-    win = pygame.display.set_mode((640, 640))
+    win = pygame.display.set_mode(window.rect.size)
     pygame.display.set_caption("Tic-Tac-Toe")
+
+    # Initialize windows
+    menu = Menu()
 
     # Execute
     menu_loop()

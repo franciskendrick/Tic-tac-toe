@@ -1,4 +1,4 @@
-from window import window
+from utils import Colors
 import pygame
 import sys
 
@@ -10,7 +10,7 @@ def redraw_game():
 
 def redraw_menu():
     # Draw background
-    win.fill(window.white)
+    win.fill(Colors.white)
 
     # Update display
     pygame.display.update()
@@ -43,7 +43,7 @@ if __name__ == "__main__":
     pygame.init()
     
     # Initialize window
-    win = pygame.display.set_mode(window.rect.size)
+    win = pygame.display.set_mode((640, 640))
     pygame.display.set_caption("Tic-Tac-Toe")
 
     # Execute

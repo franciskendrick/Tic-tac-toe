@@ -1,4 +1,5 @@
 from window import window
+from .title import Title
 import pygame
 
 pygame.init()
@@ -14,9 +15,14 @@ class Menu:
             ht // self.display_size_divider),
             pygame.SRCALPHA)
 
+        self.title = Title()
+
     def draw(self, display):
         # Fill menu's display with a transparent background
         self.display.fill((0, 0, 0, 0))
+
+        # Draw menu window on menu's display
+        self.title.draw(self.display)
 
         # Blit menu's display to original display
         resized_menu_display = pygame.transform.scale(

@@ -14,6 +14,9 @@ def redraw_menu():
     # Draw background
     win.fill(Colors.white)
 
+    # Draw menu
+    menu.draw(win)
+
     # Update display
     pygame.display.update()
 

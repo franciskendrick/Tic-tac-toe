@@ -38,6 +38,7 @@ def menu_loop():
 
         # Update display
         redraw_menu()
+        clock.tick(30)
 
     pygame.quit()
     sys.exit()
@@ -50,6 +51,7 @@ if __name__ == "__main__":
     # Initialize window
     win = pygame.display.set_mode(window.rect.size)
     pygame.display.set_caption("Tic-Tac-Toe")
+    clock = pygame.time.Clock()
 
     # Initialize windows
     menu = Menu()

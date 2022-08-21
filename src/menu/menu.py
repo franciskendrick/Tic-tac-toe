@@ -1,6 +1,6 @@
 from window import window
 from .title import Title
-from .buttons import Buttons
+from .button import Button
 from .tutorial import Tutorial
 import pygame
 
@@ -18,7 +18,7 @@ class Menu:
             pygame.SRCALPHA)
 
         self.title = Title()
-        self.buttons = Buttons()
+        self.button = Button(self.display_size_divider)
         self.tutorial = Tutorial()
 
     def draw(self, display):
@@ -27,7 +27,7 @@ class Menu:
 
         # Draw menu window on menu's display
         self.title.draw(self.display)
-        self.buttons.draw(self.display)
+        self.button.draw(self.display)
         self.tutorial.draw(self.display)
 
         # Blit menu's display to original display

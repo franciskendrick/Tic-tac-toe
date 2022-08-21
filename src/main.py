@@ -7,7 +7,11 @@ import sys
 
 # Redraws
 def redraw_game():
-    pass
+    # Draw background
+    win.fill(Colors.white)
+
+    # Update display
+    pygame.display.update()
 
 
 def redraw_menu():
@@ -23,7 +27,20 @@ def redraw_menu():
 
 # Loops
 def game_loop():
-    pass
+    # Loop
+    run = True
+    while run:
+        # Event loop
+        for event in pygame.event.get():
+            # Quit detection
+            if event.type == pygame.QUIT:
+                run = False
+
+        # Update display
+        redraw_game()
+
+    pygame.quit()
+    sys.exit()
 
 
 def menu_loop():

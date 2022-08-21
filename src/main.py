@@ -36,6 +36,11 @@ def game_loop():
             if event.type == pygame.QUIT:
                 run = False
 
+            # Key detection
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:  # exit game
+                    menu_loop()
+
         # Update display
         redraw_game()
 

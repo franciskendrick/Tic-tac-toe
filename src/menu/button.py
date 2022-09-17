@@ -76,5 +76,4 @@ class Button:
 
     # Functions --------------------------------------------------- #
     def reset_overdetection(self):
-        for button in self.buttons.values():
-            button[0] = False
+        self.button[0] = False

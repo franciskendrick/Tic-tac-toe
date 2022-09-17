@@ -61,6 +61,7 @@ def menu_loop():
             # Menu buttons' down detection
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:  # left-clicked has been uped
                 is_pressed = menu.button.button_down_detection()
+                menu.button.reset_overdetection()
                 if is_pressed:  # button is pressed
                     game_loop()
 

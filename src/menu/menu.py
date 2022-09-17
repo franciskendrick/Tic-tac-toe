@@ -2,6 +2,7 @@ from window import window
 from .title import Title
 from .button import Button
 from .tutorial import Tutorial
+from .score import Score
 import pygame
 
 pygame.init()
@@ -20,6 +21,7 @@ class Menu:
         self.title = Title()
         self.button = Button(self.display_size_divider)
         self.tutorial = Tutorial()
+        self.score = Score()
 
     def draw(self, display):
         # Fill menu's display with a transparent background
@@ -29,6 +31,7 @@ class Menu:
         self.title.draw(self.display)
         self.button.draw(self.display)
         self.tutorial.draw(self.display)
+        self.score.draw(self.display)
 
         # Blit menu's display to original display
         resized_menu_display = pygame.transform.scale(

@@ -1,5 +1,13 @@
 {
     "title_position": [5, 18],
-    "tutorial_position": [26, 96],
-    "playbutton_position": [37, 54]
+    "tutorial_position": [26, 94],
+    "playbutton_position": [37, 54],
+    "scorebkg_positions": {
+        "player": [0, 110],
+        "mini": [88, 110]
+    },
+    "scoretitle_positions": {
+        "player": [1, 103],
+        "mini": [105, 103]
+    }
 }

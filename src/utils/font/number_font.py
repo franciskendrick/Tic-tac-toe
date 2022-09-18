@@ -43,18 +43,24 @@ class NumberFont:
             # Get character image
             character = self.characters[char]
 
-            # Resize character image
+            # Resize
             if enlarge != 1:
+                # Resize character image
                 wd, ht = character.get_size()
                 resized_character = pygame.transform.scale(
-                    character, (wd, * enlarge, ht * enlarge))
+                    character, (wd * enlarge, ht * enlarge))
+
+                # Resize character spacing
+                spacing = self.character_spacing * enlarge
+            else:
+                spacing = self.character_spacing
 
             # Blit to handle display
             handle_display.blit(
                 resized_character, (x + x_offset, y))
 
             # Add to offset the width of resized character and spacing
-            x_offset += resized_character.get_width() + self.character_spacing
+            x_offset += resized_character.get_width() + spacing
 
         # Blit to display
         display.blit(handle_display, (0, 0))

@@ -9,5 +9,9 @@
     "scoretitle_positions": {
         "player": [1, 103],
         "mini": [105, 103]
+    },
+    "scoretxt_positions": {
+        "player": [2, 114],
+        "user": [92, 114]
     }
 }

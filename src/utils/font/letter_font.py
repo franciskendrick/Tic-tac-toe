@@ -41,7 +41,7 @@ class LetterFont:
             if enlarge != 1:
                 wd, ht = character.get_size()
                 resized_character = pygame.transform.scale(
-                    character, (wd, * enlarge, ht * enlarge))
+                    character, (wd * enlarge, ht * enlarge))
 
             # Blit to handle display
             handle_display.blit(

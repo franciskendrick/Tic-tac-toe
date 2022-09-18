@@ -1,7 +1,7 @@
 from utils import Colors
 from window import window
 from menu import Menu
-from game import Game
+from game import TicTacToe
 import pygame
 import sys
 
@@ -12,7 +12,7 @@ def redraw_game():
     win.fill(Colors.white)
 
     # Draw game
-    game.draw(win)
+    tictactoe.draw(win)
 
     # Update display
     pygame.display.update()
@@ -92,7 +92,7 @@ if __name__ == "__main__":
 
     # Initialize windows
     menu = Menu()
-    game = Game()
+    tictactoe = TicTacToe()
 
     # Execute
     menu_loop()

@@ -5,11 +5,14 @@ import pygame
 pygame.init()
 
 
-class Game:
+class TicTacToe:
+    # Initialize
     def __init__(self):
         self.display = pygame.Surface(
             window.rect.size, pygame.SRCALPHA)
+        self.board = self.make_board()
 
+    # Draw
     def draw(self, display):
         # Fill game's display with a transparent background
         self.display.fill((0, 0, 0, 0))
@@ -26,3 +29,7 @@ class Game:
         resized_game_display = pygame.transform.scale(
             self.display, display.get_size())
         display.blit(resized_game_display, (0, 0))
+
+    # Functions
+    def make_board(selfs):
+        return [["" for _ in range(3)] for _ in range(3)]

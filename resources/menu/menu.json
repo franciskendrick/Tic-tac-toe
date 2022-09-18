@@ -4,14 +4,14 @@
     "playbutton_position": [37, 54],
     "scorebkg_positions": {
         "player": [0, 110],
-        "mini": [88, 110]
+        "venice": [88, 110]
     },
     "scoretitle_positions": {
         "player": [1, 103],
-        "mini": [105, 103]
+        "venice": [92, 103]
     },
     "scoretxt_positions": {
         "player": [2, 114],
-        "user": [92, 114]
+        "venice": [92, 114]
     }
 }

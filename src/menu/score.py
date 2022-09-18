@@ -51,7 +51,7 @@ class Score(NumberFont):
         # Scores
         self.scores = {
             "player": 0,
-            "mini": 0
+            "venice": 0
         }
 
         # Positions

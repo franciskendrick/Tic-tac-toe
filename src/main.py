@@ -1,6 +1,7 @@
 from utils import Colors
 from window import window
 from menu import Menu
+from game import Game
 import pygame
 import sys
 
@@ -9,6 +10,9 @@ import sys
 def redraw_game():
     # Draw background
     win.fill(Colors.white)
+
+    # Draw game
+    game.draw(win)
 
     # Update display
     pygame.display.update()
@@ -88,6 +92,7 @@ if __name__ == "__main__":
 
     # Initialize windows
     menu = Menu()
+    game = Game()
 
     # Execute
     menu_loop()

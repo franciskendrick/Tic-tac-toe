@@ -8,6 +8,7 @@ pygame.init()
 class TicTacToe(LetterFont):
     display_size_divider = 5
 
+    # Initialize
     def __init__(self, user_letter):
         super().__init__()
 
@@ -37,6 +38,7 @@ class TicTacToe(LetterFont):
         self.user_letter = user_letter
         self.ishovered_off = False
 
+    # Draw
     def draw(self, display):
         # Fill game's display with a transparent background
         self.display.fill((0, 0, 0, 0))
@@ -66,6 +68,7 @@ class TicTacToe(LetterFont):
             self.display, display.get_size())
         display.blit(resized_game_display, (0, 0))
 
+    # Handle mouse
     def handle_mousemotion(self):
         if pygame.mouse.get_focused():  # mouse is INSIDE the pygame window
             self.ishovered_off = False
@@ -96,3 +99,23 @@ class TicTacToe(LetterFont):
                         # Update value variable
                         if hitbox.collidepoint(*mouse_pos):
                             self.board[i][j][0] = self.user_letter  # value
+
+    # Get Winner
+    def get_winner(self):
+        # Rows
+        for i in range(3):
+            row = [self.board[j][i][0] for j in range(3)]
+            if len(set(row)) == 1 and row[0] != "":
+                return row[0]
+
+        # Columns
+        for i in range(3):
+            col = [self.board[j][i][0] for j in range(3)]
+            if len(set(col)) == 1 and col[0] != "":
+                return col[0]
+
+        # Diagonals
+        if len(set([self.board[i][i][0] for i in range(3)])) == 1 and self.board[0][0][0] != "":
+            return self.board[0][0][0]
+        if len(set([self.board[i][2-i][0] for i in range(3)])) == 1 and self.board[0][2][0] != "":
+            return self.board[0][2][0]

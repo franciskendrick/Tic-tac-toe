@@ -42,8 +42,9 @@ def game_loop():
                 if event.key == pygame.K_ESCAPE:  # exit game
                     menu_loop()
 
-        # Handle board mouse motion
+        # Handle tic-tac-toe board
         tictactoe.handle_mousemotion()
+        tictactoe.handle_mousedown()
 
         # Update display
         redraw_game()
@@ -92,7 +93,7 @@ if __name__ == "__main__":
 
     # Initialize windows
     menu = Menu()
-    tictactoe = TicTacToe()
+    tictactoe = TicTacToe("X")
 
     # Execute
     menu_loop()

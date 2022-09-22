@@ -8,7 +8,7 @@ pygame.init()
 class TicTacToe(LetterFont):
     display_size_divider = 5
 
-    def __init__(self):
+    def __init__(self, user_letter):
         super().__init__()
 
         wd, ht = window.rect.size
@@ -33,6 +33,9 @@ class TicTacToe(LetterFont):
                     pygame.Rect(box_x*e, box_y*e, 42*e, 42*e),  # hitbox
                 ]
                 self.board[i].append(box)
+        
+        self.user_letter = user_letter
+        self.ishovered_off = False
 
     def draw(self, display):
         # Fill game's display with a transparent background
@@ -64,22 +67,32 @@ class TicTacToe(LetterFont):
         display.blit(resized_game_display, (0, 0))
 
     def handle_mousemotion(self):
-        if pygame.mouse.get_focused():  # mouse must be on pygame window
+        if pygame.mouse.get_focused():  # mouse is INSIDE the pygame window
             self.ishovered_off = False
 
             mouse_pos = pygame.mouse.get_pos()
             for i, row in enumerate(self.board):
-                for j, (*_, hitbox) in enumerate(row):
+                for j, (value, *_, hitbox) in enumerate(row):
                     # Toggle is hovered variable
-                    if hitbox.collidepoint(*mouse_pos):
-                        self.board[i][j][1] = True
+                    if hitbox.collidepoint(*mouse_pos) and value == "":
+                        self.board[i][j][1] = True  # is hovered
                     else:
-                        self.board[i][j][1] = False
-        else:
+                        self.board[i][j][1] = False  # is hovered
+        else:  # mouse is OUTSIDE the pygame window
             if not self.ishovered_off:
                 self.ishovered_off = True
 
                 # Turn off is hovered variables
                 for i, row in enumerate(self.board):
                     for j, _ in enumerate(row):
-                        self.board[i][j][1] = False
+                        self.board[i][j][1] = False  # is hovered
+
+    def handle_mousedown(self):
+        if pygame.mouse.get_focused():  # mouse is in the pygame window
+            if pygame.mouse.get_pressed()[0]:  # left-click is pressed
+                mouse_pos = pygame.mouse.get_pos()
+                for i, row in enumerate(self.board):
+                    for j, (*_, hitbox) in enumerate(row):
+                        # Update value variable
+                        if hitbox.collidepoint(*mouse_pos):
+                            self.board[i][j][0] = self.user_letter  # value

@@ -8,9 +8,6 @@ import sys
 
 # Redraws
 def redraw_game():
-    # Draw background
-    win.fill(Colors.white)
-
     # Draw game
     tictactoe.draw(win)
 
@@ -44,6 +41,9 @@ def game_loop():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:  # exit game
                     menu_loop()
+
+        # Handle board mouse motion
+        tictactoe.handle_mousemotion()
 
         # Update display
         redraw_game()

@@ -1,20 +1,8 @@
 from utils import Colors, LetterFont
 from window import window
 import pygame
-import json
-import os
 
 pygame.init()
-resources_path = os.path.abspath(
-    os.path.join(
-        os.path.dirname(__file__), 
-        "..", "..", "resources", "game"
-        )
-    )
-
-# Json
-with open(f"{resources_path}/game.json") as json_file:
-    game_data = json.load(json_file)
 
 
 class TicTacToe(LetterFont):
@@ -29,8 +17,22 @@ class TicTacToe(LetterFont):
             ht // self.display_size_divider),
             pygame.SRCALPHA)
         
-        self.board = [["" for _ in range(3)] for _ in range(3)]
-        self.letter_positions = game_data["boardletter_positions"]
+        # Board
+        self.board = []
+        e = self.display_size_divider
+        for i, (box_x, ltr_x) in enumerate(
+                zip(range(0, 128, 42+1), range(11, 97+1, 43))):
+            self.board.append([])
+            for (box_y, ltr_y) in zip(
+                    range(0, 128, 42+1), range(9, 95+1, 43)):
+                box = [
+                    "",  # value
+                    False,  # is hovered
+                    (ltr_x, ltr_y),  # letter's position
+                    pygame.Rect(box_x, box_y, 42, 42),  # box's rectangle
+                    pygame.Rect(box_x*e, box_y*e, 42*e, 42*e),  # hitbox
+                ]
+                self.board[i].append(box)
 
     def draw(self, display):
         # Fill game's display with a transparent background
@@ -44,15 +46,40 @@ class TicTacToe(LetterFont):
             pygame.draw.line(
                 self.display, Colors.black, (size * i, 0), (size * i, 128))
 
-        # Draw letters
-        for i, row in enumerate(self.board):
-            for j, letter in enumerate(row):
-                if letter != "":
-                    pos = self.letter_positions[j][i]
+        # Draw boxes
+        for row in self.board:
+            for (value, is_hovered, letter_pos, box_rect, _) in row:
+                # Draw box
+                color = Colors.light_gray if is_hovered else Colors.white
+                pygame.draw.rect(self.display, color, box_rect)
+
+                # Draw letter
+                if value != "":
                     self.render_font(
-                        self.display, letter, pos, enlarge=4)
+                        self.display, value, letter_pos, enlarge=4)
 
         # Blit game's display to original display
         resized_game_display = pygame.transform.scale(
             self.display, display.get_size())
         display.blit(resized_game_display, (0, 0))
+
+    def handle_mousemotion(self):
+        if pygame.mouse.get_focused():  # mouse must be on pygame window
+            self.ishovered_off = False
+
+            mouse_pos = pygame.mouse.get_pos()
+            for i, row in enumerate(self.board):
+                for j, (*_, hitbox) in enumerate(row):
+                    # Toggle is hovered variable
+                    if hitbox.collidepoint(*mouse_pos):
+                        self.board[i][j][1] = True
+                    else:
+                        self.board[i][j][1] = False
+        else:
+            if not self.ishovered_off:
+                self.ishovered_off = True
+
+                # Turn off is hovered variables
+                for i, row in enumerate(self.board):
+                    for j, _ in enumerate(row):
+                        self.board[i][j][1] = False

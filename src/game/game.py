@@ -1,5 +1,6 @@
 from utils import Colors, LetterFont
 from window import window
+from .player import HumanPlayer
 import pygame
 
 pygame.init()
@@ -9,7 +10,7 @@ class TicTacToe(LetterFont):
     display_size_divider = 5
 
     # Initialize
-    def __init__(self, user_letter):
+    def __init__(self):
         super().__init__()
 
         wd, ht = window.rect.size
@@ -35,8 +36,10 @@ class TicTacToe(LetterFont):
                 ]
                 self.board[i].append(box)
         
-        self.user_letter = user_letter
         self.ishovered_off = False
+
+        # Players
+        self.human_player = HumanPlayer("X")
 
     # Draw
     def draw(self, display):
@@ -69,10 +72,15 @@ class TicTacToe(LetterFont):
         display.blit(resized_game_display, (0, 0))
 
     # Handle mouse
+    def handle_mouse(self):
+        self.human_player.handle_mousedown(self.board)
+        self.handle_mousemotion()
+
     def handle_mousemotion(self):
         if pygame.mouse.get_focused():  # mouse is INSIDE the pygame window
             self.ishovered_off = False
 
+            # Loop over every box in board and update is_hovered variable
             mouse_pos = pygame.mouse.get_pos()
             for i, row in enumerate(self.board):
                 for j, (value, *_, hitbox) in enumerate(row):
@@ -85,20 +93,10 @@ class TicTacToe(LetterFont):
             if not self.ishovered_off:
                 self.ishovered_off = True
 
-                # Turn off is hovered variables
+                # Turn off is_hovered variables
                 for i, row in enumerate(self.board):
                     for j, _ in enumerate(row):
                         self.board[i][j][1] = False  # is hovered
-
-    def handle_mousedown(self):
-        if pygame.mouse.get_focused():  # mouse is in the pygame window
-            if pygame.mouse.get_pressed()[0]:  # left-click is pressed
-                mouse_pos = pygame.mouse.get_pos()
-                for i, row in enumerate(self.board):
-                    for j, (*_, hitbox) in enumerate(row):
-                        # Update value variable
-                        if hitbox.collidepoint(*mouse_pos):
-                            self.board[i][j][0] = self.user_letter  # value
 
     # Get Winner
     def get_winner(self):

@@ -43,7 +43,8 @@ def game_loop():
                     menu_loop()
 
         # Handle tic-tac-toe board
-        tictactoe.handle_mouse()
+        tictactoe.handle_mousemotion()
+        tictactoe.handle_moves()
 
         # Update display
         redraw_game()

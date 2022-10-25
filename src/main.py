@@ -1,6 +1,7 @@
 from utils import Colors
 from window import window
 from menu import Menu
+from popup import PopUp
 from game import TicTacToe
 import pygame
 import sys
@@ -21,6 +22,17 @@ def redraw_menu():
 
     # Draw menu
     menu.draw(win)
+
+    # Update display
+    pygame.display.update()
+
+
+def redraw_popup():
+    # Draw background
+    win.fill(Colors.white)
+
+    # Draw popup
+    popup.draw(win)
 
     # Update display
     pygame.display.update()
@@ -87,6 +99,24 @@ def menu_loop():
     sys.exit()
 
 
+def popup_loop():
+    # Loop
+    run = True
+    while run:
+        # Event loop
+        for event in pygame.event.get():
+            # Quit detection
+            if event.type == pygame.QUIT:
+                run = False
+
+        # Update display
+        redraw_popup()
+        clock.tick(30)
+
+    pygame.quit()
+    sys.exit()
+
+
 # Execute
 if __name__ == "__main__":
     pygame.init()
@@ -98,7 +128,8 @@ if __name__ == "__main__":
 
     # Initialize windows
     menu = Menu()
+    popup = PopUp()
     tictactoe = TicTacToe()
 
     # Execute
-    menu_loop()
+    popup_loop()

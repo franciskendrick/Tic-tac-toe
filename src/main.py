@@ -43,8 +43,10 @@ def game_loop():
                     menu_loop()
 
         # Handle tic-tac-toe board
-        tictactoe.handle_mousemotion()
-        tictactoe.handle_moves()
+        if not tictactoe.game_finished:
+            tictactoe.handle_mousemotion()
+            tictactoe.handle_moves()
+            tictactoe.get_winner()
 
         # Update display
         redraw_game()

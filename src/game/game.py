@@ -25,8 +25,9 @@ class TicTacToe:
         self.human_player = HumanPlayer("X")
         self.computer_player = ComputerPlayer("O")
 
-        # Turn
+        # Status
         self.x_turn = True
+        self.game_finished = False
 
     # Draw
     def draw(self, display):
@@ -49,7 +50,7 @@ class TicTacToe:
             self.display, display.get_size())
         display.blit(resized_game_display, (0, 0))
 
-    # Handle mouse
+    # Handle 
     def handle_mousemotion(self):
         if pygame.mouse.get_focused():  # mouse is INSIDE the pygame window
             self.ishovered_off = False
@@ -68,11 +69,10 @@ class TicTacToe:
                 self.ishovered_off = True
 
                 # Turn off is_hovered variables
-                for i, row in enumerate(self.board.board):
-                    for j, _ in enumerate(row):
+                for i in range(len(self.board.board)):
+                    for j in range(len(self.board.board[0])):
                         self.board.board[i][j][1] = False  # is hovered
 
-    # Handle moves
     def handle_moves(self):
         if self.x_turn:
             move = self.human_player.handle_mousedown(self.board.board)
@@ -87,6 +87,26 @@ class TicTacToe:
                 self.board.board[i][j][0] = "O"
                 self.x_turn = True
                 time.sleep(0.8)
+
+    # Get Data
+    def get_winner(self):
+        winner = self.board.winner()
+        if winner is not None:
+            print(f"{winner} WON!")
+
+            self.reset_overdetection()
+            self.game_finished = True
+        elif self.board.num_empty_squares() <= 0:
+            print("DRAW!")
+
+            self.reset_overdetection()
+            self.game_finished = True
+
+    # Reset
+    def reset_overdetection(self):
+        for i in range(len(self.board.board)):
+            for j in range(len(self.board.board[0])):
+                self.board.board[i][j][1] = False  # is hovered
 
 
 class Board(LetterFont):
@@ -126,7 +146,6 @@ class Board(LetterFont):
                     self.render_font(
                         display, value, letter_pos, enlarge=4)
 
-    # Get data
     def make_move(self, move, letter):
         i, j = move
         if self.board[i][j][0] == "":
@@ -136,7 +155,8 @@ class Board(LetterFont):
             return True
         return False
 
-    def winner(self):
+    # Get Data
+    def winner(self):  # returns the winner of the game
         # Rows
         for row in self.board:
             true_row = [row[i][0] for i in range(len(row))]
@@ -157,7 +177,7 @@ class Board(LetterFont):
 
         return None
 
-    def empty_squares(self):
+    def empty_squares(self):  # returns a list of the positions of board's empty squares
         empty_squares = True
         for row in self.board:
             true_row = [row[i][0] for i in range(len(row))]
@@ -165,15 +185,15 @@ class Board(LetterFont):
 
         return empty_squares
 
-    def num_empty_squares(self):
-        empty_squares = 0
+    def num_empty_squares(self):  # resturns the number of how many empty squares are left
+        num_empty_squares = 0
         for row in self.board:
             true_row = [row[i][0] for i in range(len(row))]
-            empty_squares += true_row.count("")
+            num_empty_squares += true_row.count("")
 
-        return empty_squares
+        return num_empty_squares
 
-    def available_moves(self):
+    def available_moves(self):  # returns a list of all available moves
         available_moves = []
         for i, row in enumerate(self.board):
             for j, (value, *_) in enumerate(row):

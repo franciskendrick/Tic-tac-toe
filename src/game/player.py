@@ -5,11 +5,6 @@ import math
 pygame.init()
 
 
-class Player:
-    def __init__(self, user_letter):
-        self.user_letter = user_letter
-
-
 class HumanPlayer:
     def __init__(self, user_letter):
         self.user_letter = user_letter

@@ -108,12 +108,25 @@ class TicTacToe:
             for j in range(len(self.board.board[0])):
                 self.board.board[i][j][1] = False  # is hovered
 
+    def reset_game(self):
+        # Board
+        self.board.init_board(self.display_size_divider)
+
+        # Status
+        self.x_turn = True
+        self.game_finished = False
+
 
 class Board(LetterFont):
+    # Initialize
     def __init__(self, e):
         super().__init__()
 
-        # Board
+        self.init_board(e)
+        self.ishovered_off = False
+        self.current_winner = None
+
+    def init_board(self, e):
         self.board = []
         for i, (box_x, ltr_x) in enumerate(
                 zip(range(0, 128, 42+1), range(11, 97+1, 43))):
@@ -128,12 +141,8 @@ class Board(LetterFont):
                     pygame.Rect(box_x*e, box_y*e, 42*e, 42*e),  # hitbox
                 ]
                 self.board[i].append(box)
-        
-        self.ishovered_off = False
-
-        # Winner
-        self.current_winner = None
     
+    # Draw
     def draw(self, display):
         for row in self.board:
             for (value, is_hovered, letter_pos, box_rect, _) in row:
@@ -146,6 +155,7 @@ class Board(LetterFont):
                     self.render_font(
                         display, value, letter_pos, enlarge=4)
 
+    # Move
     def make_move(self, move, letter):
         i, j = move
         if self.board[i][j][0] == "":

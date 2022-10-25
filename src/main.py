@@ -40,7 +40,10 @@ def game_loop():
             # Key detection
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:  # exit game
+                    tictactoe.reset_game()
                     menu_loop()
+                if event.key == pygame.K_SPACE:  # restart game
+                    tictactoe.reset_game()
 
         # Handle tic-tac-toe board
         if not tictactoe.game_finished:

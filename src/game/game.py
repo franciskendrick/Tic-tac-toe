@@ -88,7 +88,7 @@ class TicTacToe:
                 self.x_turn = True
                 time.sleep(0.8)
 
-    # Get Data
+    # Get data
     def get_winner(self):
         winner = self.board.winner()
         if winner is not None:
@@ -165,7 +165,7 @@ class Board(LetterFont):
             return True
         return False
 
-    # Get Data
+    # Get data
     def winner(self):  # returns the winner of the game
         # Rows
         for row in self.board:

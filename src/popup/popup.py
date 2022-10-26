@@ -1,4 +1,5 @@
 from window import window
+from .title import Title
 import pygame
 
 pygame.init()
@@ -14,11 +15,14 @@ class PopUp:
             ht // self.display_size_divider),
             pygame.SRCALPHA)
 
+        self.title = Title()
+
     def draw(self, display):
         # Fill popup's display with a transparent background
         self.display.fill((0, 0, 0, 0))
 
         # Draw popup window on popup's display
+        self.title.draw(self.display)
 
         # Blit popup's display to original display
         resized_menu_display = pygame.transform.scale(

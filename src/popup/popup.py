@@ -1,5 +1,6 @@
 from window import window
 from .title import Title
+from .buttons import Buttons
 import pygame
 
 pygame.init()
@@ -16,6 +17,7 @@ class PopUp:
             pygame.SRCALPHA)
 
         self.title = Title()
+        self.buttons = Buttons()
 
     def draw(self, display):
         # Fill popup's display with a transparent background
@@ -23,6 +25,7 @@ class PopUp:
 
         # Draw popup window on popup's display
         self.title.draw(self.display)
+        self.buttons.draw(self.display)
 
         # Blit popup's display to original display
         resized_menu_display = pygame.transform.scale(

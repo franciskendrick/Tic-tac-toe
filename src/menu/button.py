@@ -17,7 +17,7 @@ with open(f"{resources_path}/menu.json") as json_file:
 
 
 class Button:
-    # Initialize -------------------------------------------------- #
+    # Initialize 
     def __init__(self, display_size_divider):
         image = pygame.image.load(
             f"{resources_path}/play_button.png")
@@ -53,14 +53,14 @@ class Button:
             hitbox  # hitbox
         ]
 
-    # Draw -------------------------------------------------------- #
+    # Draw 
     def draw(self, display):
         mouse_is_over, orig_img, hover_img, rect, _ = self.button
         img = hover_img if mouse_is_over else orig_img
 
         display.blit(img, rect)
 
-    # Action detection -------------------------------------------- #
+    # Action detection 
     def button_down_detection(self):
         *_, hitbox = self.button
 
@@ -74,6 +74,6 @@ class Button:
         mouse_pos = pygame.mouse.get_pos()
         self.button[0] = True if hitbox.collidepoint(mouse_pos) else False
 
-    # Functions --------------------------------------------------- #
+    # Functions 
     def reset_overdetection(self):
         self.button[0] = False

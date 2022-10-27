@@ -18,7 +18,7 @@ with open(f"{resources_path}/popup.json") as json_file:
 
 class Buttons:
     # Initialize
-    def __init__(self):
+    def __init__(self, enlarge):
         spriteset = pygame.image.load(
             f"{resources_path}/buttons.png")
         order = ["yes", "no"]
@@ -41,31 +41,45 @@ class Buttons:
             hover_img = palette_swap(img.convert(), hover_palette[name])
             img_rect = pygame.Rect(
                 popup_data["buttons_positions"][name], img.get_rect().size)
+            hitbox = pygame.Rect(
+                img_rect.x * enlarge, img_rect.y * enlarge,
+                img_rect.width * enlarge, img_rect.height * enlarge)
 
             # Append
             button = [
                 False,  # is hovered
                 img,  # orig image
                 hover_img,  # hover image
-                img_rect  # image rectangle
+                img_rect,  # image rectangle
+                hitbox  # hitbox
             ]
             self.buttons[name] = button
 
     # Draw
     def draw(self, display):
         for button in self.buttons.values():
-            is_hovered, orig_img, hover_img, img_rect = button
+            is_hovered, orig_img, hover_img, img_rect, _ = button
             img = hover_img if is_hovered else orig_img
 
             display.blit(img, img_rect)  # image
 
     # Action detection
     def button_down_detection(self):
-        pass
+        for (name, button) in self.buttons.items():
+            *_, hitbox = button
+
+            mouse_pos = pygame.mouse.get_pos()
+            if hitbox.collidepoint(mouse_pos):
+                return name
 
     def button_over_detection(self):
-        pass
+        for button in self.buttons.values():
+            *_, hitbox = button
+
+            mouse_pos = pygame.mouse.get_pos()
+            button[0] = True if hitbox.collidepoint(mouse_pos) else False
 
     # Functions
     def reset_overdetection(self):
-        pass
+        for button in self.buttons.values():
+            button[0] = False

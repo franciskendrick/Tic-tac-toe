@@ -17,7 +17,7 @@ class PopUp:
             pygame.SRCALPHA)
 
         self.title = Title()
-        self.buttons = Buttons()
+        self.buttons = Buttons(self.display_size_divider)
 
     def draw(self, display):
         # Fill popup's display with a transparent background

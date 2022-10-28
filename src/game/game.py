@@ -3,6 +3,7 @@ from window import window
 from .player import HumanPlayer, ComputerPlayer
 import pygame
 import time
+import math
 
 pygame.init()
 
@@ -57,46 +58,42 @@ class TicTacToe:
 
             # Loop over every box in board and update is_hovered variable
             mouse_pos = pygame.mouse.get_pos()
-            for i, row in enumerate(self.board.board):
-                for j, (value, *_, hitbox) in enumerate(row):
-                    # Toggle is hovered variable
-                    if hitbox.collidepoint(*mouse_pos) and value == "":
-                        self.board.board[i][j][1] = True  # is hovered
-                    else:
-                        self.board.board[i][j][1] = False  # is hovered
+            for i, (value, *_, hitbox) in enumerate(self.board.board):
+                # Toggle is hovered variable
+                if hitbox.collidepoint(*mouse_pos) and value == "":
+                    self.board.board[i][1] = True  # is hovered
+                else:
+                    self.board.board[i][1] = False  # is hovered
         elif not pygame.mouse.get_focused():  # mouse is OUTSIDE the pygame window
             if not self.ishovered_off:
                 self.ishovered_off = True
 
                 # Turn off is_hovered variables
                 for i in range(len(self.board.board)):
-                    for j in range(len(self.board.board[0])):
-                        self.board.board[i][j][1] = False  # is hovered
+                    self.board.board[i][1] = False  # is hovered
 
     def handle_moves(self):
         if self.x_turn:
             move = self.human_player.handle_mousedown(self.board.board)
             if move != None:
-                i, j = move
-                self.board.board[i][j][0] = "X"
+                self.board.board[move][0] = "X"
                 self.x_turn = False
         else:
             move = self.computer_player.get_move(self.board)
             if move != None:
-                i, j = move
-                self.board.board[i][j][0] = "O"
+                self.board.board[move][0] = "O"
                 self.x_turn = True
                 time.sleep(0.8)
 
     # Get data
     def get_winner(self):
         winner = self.board.winner()
-        if winner is not None:
+        if winner is not None:  # check who won
             print(f"{winner} WON!")
 
             self.reset_overdetection()
             self.game_finished = True
-        elif self.board.num_empty_squares() <= 0:
+        elif self.board.num_empty_squares() <= 0:  # check if draw
             print("DRAW!")
 
             self.reset_overdetection()
@@ -105,8 +102,7 @@ class TicTacToe:
     # Reset
     def reset_overdetection(self):
         for i in range(len(self.board.board)):
-            for j in range(len(self.board.board[0])):
-                self.board.board[i][j][1] = False  # is hovered
+            self.board.board[i][1] = False  # is hovered
 
     def reset_game(self):
         # Board
@@ -127,12 +123,9 @@ class Board(LetterFont):
         self.current_winner = None
 
     def init_board(self, e):
-        self.board = []
-        for i, (box_x, ltr_x) in enumerate(
-                zip(range(0, 128, 42+1), range(11, 97+1, 43))):
-            self.board.append([])
-            for (box_y, ltr_y) in zip(
-                    range(0, 128, 42+1), range(9, 95+1, 43)):
+        self.board = [] 
+        for (box_x, ltr_x) in zip(range(0, 128, 42+1), range(11, 97+1, 43)):
+            for (box_y, ltr_y) in zip(range(0, 128, 42+1), range(9, 95+1, 43)):
                 box = [
                     "",  # value
                     False,  # is hovered
@@ -140,74 +133,98 @@ class Board(LetterFont):
                     pygame.Rect(box_x, box_y, 42, 42),  # box's rectangle
                     pygame.Rect(box_x*e, box_y*e, 42*e, 42*e),  # hitbox
                 ]
-                self.board[i].append(box)
-    
+                self.board.append(box)
+
     # Draw
     def draw(self, display):
-        for row in self.board:
-            for (value, is_hovered, letter_pos, box_rect, _) in row:
-                # Draw box
-                color = Colors.light_gray if is_hovered else Colors.white
-                pygame.draw.rect(display, color, box_rect)
+        for (value, is_hovered, letter_pos, box_rect, _) in self.board:
+            # Draw box
+            color = Colors.light_gray if is_hovered else Colors.white
+            pygame.draw.rect(display, color, box_rect)
 
-                # Draw letter
-                if value != "":
-                    self.render_font(
-                        display, value, letter_pos, enlarge=4)
+            # Draw letter
+            if value != "":
+                self.render_font(
+                    display, value, letter_pos, enlarge=4)
 
     # Move
     def make_move(self, move, letter):
-        i, j = move
-        if self.board[i][j][0] == "":
-            self.board[i][j][0] = letter
-            if self.winner() == letter:
+        if self.board[move][0] == "":
+            self.board[move][0] = letter
+            if self.winner(move, letter) == letter:
                 self.current_winner = letter
             return True
         return False
 
-    # Get data
-    def winner(self):  # returns the winner of the game
+    # Get winner
+    def winner(self, move=None, letter=None):  # returns the winner of the game
+        if (move, letter) == (None, None):  # no variables were given
+            letter = self.winner_with_novars()
+        else:  # both variables were given
+            letter = self.winner_with_vars(move, letter)
+        
+        return letter
+
+    def winner_with_vars(self, move, letter):
         # Rows
-        for row in self.board:
-            true_row = [row[i][0] for i in range(len(row))]
-            if len(set(true_row)) == 1 and true_row[0] != "":
-                return true_row[0]
+        ind = move % 3
+        column = [self.board[ind + (i * 3)] for i in range(3)]
+        if all([value == letter for (value, *_) in column]):
+            return letter
 
         # Columns
-        for i in range(3):
-            col = [self.board[j][i][0] for j in range(3)]
-            if len(set(col)) == 1 and col[0] != "":
-                return col[0]
+        ind = math.floor(move / 3)
+        row = self.board[ind * 3:(ind + 1) * 3]
+        if all([value == letter for (value, *_) in row]):
+            return letter
 
         # Diagonals
-        if len(set([self.board[i][i][0] for i in range(3)])) == 1 and self.board[0][0][0] != "":
-            return self.board[0][0][0]
-        if len(set([self.board[i][2-i][0] for i in range(3)])) == 1 and self.board[0][2][0] != "":
-            return self.board[0][2][0]
+        if move % 2 == 0:
+            # Diagonal 1
+            diagonal = [self.board[i] for i in [0, 4, 8]]
+            if all([value == letter for (value, *_) in diagonal]):
+                return letter
+
+            # Diagonal 2
+            diagonal = [self.board[i] for i in [2, 4, 6]]
+            if all([value == letter for (value, *_) in diagonal]):
+                return letter
 
         return None
 
-    def empty_squares(self):  # returns a list of the positions of board's empty squares
-        empty_squares = True
-        for row in self.board:
-            true_row = [row[i][0] for i in range(len(row))]
-            empty_squares = "" in true_row
+    def winner_with_novars(self):
+        for letter in ["X", "O"]:
+            # Rows
+            for ind in range(3):
+                column = [self.board[ind + (i * 3)] for i in range(3)]
+                if all([value == letter for (value, *_) in column]):
+                    return letter
 
-        return empty_squares
+            # Columns
+            for ind in range(3):
+                row = self.board[ind * 3:(ind + 1) * 3]
+                if all([value == letter for (value, *_) in row]):
+                    return letter
+
+            # Diagonals
+            diagonal = [self.board[i] for i in [0, 4, 8]]
+            if all([value == letter for (value, *_) in diagonal]):
+                return letter
+
+            diagonal = [self.board[i] for i in [2, 4, 6]]
+            if all([value == letter for (value, *_) in diagonal]):
+                return letter
+
+        return None
+
+    # Get data
+    def empty_squares(self):  # returns a list of the positions of board's empty squares
+        return "" in [self.board[i][0] for i in range(len(self.board))]
 
     def num_empty_squares(self):  # resturns the number of how many empty squares are left
-        num_empty_squares = 0
-        for row in self.board:
-            true_row = [row[i][0] for i in range(len(row))]
-            num_empty_squares += true_row.count("")
-
-        return num_empty_squares
+        return [self.board[i][0] for i in range(len(self.board))].count("")
 
     def available_moves(self):  # returns a list of all available moves
-        available_moves = []
-        for i, row in enumerate(self.board):
-            for j, (value, *_) in enumerate(row):
-                if value == "":
-                    available_moves.append([i, j])
-
-        return available_moves
+        return [
+            move for move, (value, *_) in enumerate(self.board) if value == ""
+        ]

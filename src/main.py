@@ -145,4 +145,4 @@ if __name__ == "__main__":
     tictactoe = TicTacToe()
 
     # Execute
-    popup_loop()
+    menu_loop()

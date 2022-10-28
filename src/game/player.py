@@ -14,12 +14,12 @@ class HumanPlayer:
             if pygame.mouse.get_pressed()[0]:  # left-click is pressed
                 # Loop over every box in board until hovered box is found
                 mouse_pos = pygame.mouse.get_pos()
-                for i, row in enumerate(board):
-                    for j, (*_, hitbox) in enumerate(row):
-                        # Update value variable
-                        if hitbox.collidepoint(*mouse_pos):
-                            board[i][j][0] = self.user_letter  # value
-                            return (i, j)
+
+                for i, (*_, hitbox) in enumerate(board):
+                    # Check value variable
+                    if hitbox.collidepoint(*mouse_pos):
+                        board[i][0] = self.user_letter  # value
+                        return i
         return None
 
 
@@ -59,8 +59,7 @@ class ComputerPlayer:  # Venice AI
             child = self.minimax(state, other_player)
 
             # Undo move
-            i, j = possible_move
-            state.board[i][j][0] = ""
+            state.board[possible_move][0] = ""
             state.current_winner = None
             child["position"] = possible_move
 

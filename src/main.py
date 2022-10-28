@@ -52,10 +52,18 @@ def game_loop():
             # Key detection
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:  # exit game
-                    tictactoe.reset_game()
-                    menu_loop()
+                    is_yes = popup_loop()
+                    if is_yes:
+                        tictactoe.reset_game()
+                        menu_loop()
+                    else:
+                        game_loop()
                 if event.key == pygame.K_SPACE:  # restart game
-                    popup_loop()
+                    is_yes = popup_loop()
+                    if is_yes:
+                        tictactoe.reset_game()
+                    else:
+                        game_loop()
 
         # Handle tic-tac-toe board
         if not tictactoe.game_finished:
@@ -114,9 +122,9 @@ def popup_loop():
                 button_pressed = popup.buttons.button_down_detection()
                 popup.buttons.reset_overdetection() 
                 if button_pressed == "yes":  # yes button is pressed
-                    tictactoe.reset_game()
-                    
-                game_loop()
+                    return True
+                else:  # no button is pressed
+                    return False
 
             # PopUp buttons' over detection
             if event.type == pygame.MOUSEMOTION:

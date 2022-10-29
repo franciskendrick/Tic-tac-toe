@@ -29,15 +29,9 @@ class Score(NumberFont):
         background_spriteset = pygame.image.load(
             f"{resources_path}/score_background.png")
             
-        self.background_imgs = []
-        for image in clip_set_to_list_on_xaxis(background_spriteset):
-            # Reisze image
-            wd, ht = image.get_size()
-            resized_image = pygame.transform.scale(
-                image, (wd * 2, ht * 2))
-
-            # Append
-            self.background_imgs.append(resized_image)
+        self.background_imgs = [
+            image for image in clip_set_to_list_on_xaxis(background_spriteset)
+        ]
 
         self.title_imgs = clip_set_to_list_on_xaxis(
             pygame.image.load(
@@ -70,4 +64,15 @@ class Score(NumberFont):
         # Scores
         for score, pos in zip(self.scores.values(), self.score_pos.values()):
             self.render_font(
-                display, str(score).zfill(3), pos, enlarge=2)
+                display, self.format_score(str(score).zfill(7)), pos)
+
+    # Format function/s
+    def format_score(self, score, index=3):
+        new_score = score[:-index] + "," + score[-index:]
+
+        index += 4
+        if index >= len(new_score):
+            return new_score
+        else:
+            new_score = self.format_score(new_score, index)
+            return new_score

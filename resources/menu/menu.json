@@ -3,15 +3,15 @@
     "tutorial_position": [24, 85],
     "playbutton_position": [37, 54],
     "scorebkg_positions": {
-        "player": [0, 110],
-        "venice": [88, 110]
+        "player": [0, 119],
+        "venice": [78, 119]
     },
     "scoretitle_positions": {
-        "player": [1, 103],
-        "venice": [92, 103]
+        "player": [1, 112],
+        "venice": [92, 112]
     },
     "scoretxt_positions": {
-        "player": [2, 114],
-        "venice": [92, 114]
+        "player": [1, 121],
+        "venice": [80, 121]
     }
 }

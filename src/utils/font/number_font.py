@@ -16,7 +16,8 @@ class NumberFont:
     # Order of characters in font spriteset
     order = [
         "0", "1", "2", "3", "4",
-        "5", "6", "7", "8", "9"
+        "5", "6", "7", "8", "9",
+        ","
     ]
 
     # Spacing
@@ -47,7 +48,7 @@ class NumberFont:
             if enlarge != 1:
                 # Resize character image
                 wd, ht = character.get_size()
-                resized_character = pygame.transform.scale(
+                character = pygame.transform.scale(
                     character, (wd * enlarge, ht * enlarge))
 
                 # Resize character spacing
@@ -56,11 +57,10 @@ class NumberFont:
                 spacing = self.character_spacing
 
             # Blit to handle display
-            handle_display.blit(
-                resized_character, (x + x_offset, y))
+            handle_display.blit(character, (x + x_offset, y))
 
             # Add to offset the width of resized character and spacing
-            x_offset += resized_character.get_width() + spacing
+            x_offset += character.get_width() + spacing
 
         # Blit to display
         display.blit(handle_display, (0, 0))

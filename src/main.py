@@ -180,6 +180,15 @@ def gameover_loop():
             if event.type == pygame.MOUSEMOTION:
                 gameover.button.button_over_detection()
 
+            # Key detection
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:  # exit game
+                    tictactoe.reset_game()
+                    menu_loop()
+                if event.key == pygame.K_SPACE:  # restart game
+                    tictactoe.reset_game()
+                    game_loop()
+
         # Update display
         redraw_gameover()
         clock.tick(30)

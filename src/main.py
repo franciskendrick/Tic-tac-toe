@@ -1,8 +1,9 @@
 from utils import Colors
 from window import window
+from game import TicTacToe
 from menu import Menu
 from popup import PopUp
-from game import TicTacToe
+from gameover import GameOver
 import pygame
 import sys
 
@@ -33,6 +34,17 @@ def redraw_popup():
 
     # Draw popup
     popup.draw(win)
+
+    # Update display
+    pygame.display.update()
+
+
+def redraw_gameover():
+    # Draw background
+    win.fill(Colors.white)
+
+    # Draw gameover
+    gameover.draw(win)
 
     # Update display
     pygame.display.update()
@@ -138,6 +150,24 @@ def popup_loop():
     sys.exit()
 
 
+def gameover_loop():
+    # Loop
+    run = True
+    while run:
+        # Event loop
+        for event in pygame.event.get():
+            # Quit detection
+            if event.type == pygame.QUIT:
+                run = False
+
+        # Update display
+        redraw_gameover()
+        clock.tick(30)
+
+    pygame.quit()
+    sys.exit()
+
+
 # Execute
 if __name__ == "__main__":
     pygame.init()
@@ -148,9 +178,10 @@ if __name__ == "__main__":
     clock = pygame.time.Clock()
 
     # Initialize windows
+    tictactoe = TicTacToe()
     menu = Menu()
     popup = PopUp()
-    tictactoe = TicTacToe()
+    gameover = GameOver()
 
     # Execute
-    menu_loop()
+    gameover_loop()

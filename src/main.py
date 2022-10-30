@@ -5,6 +5,7 @@ from menu import Menu
 from popup import PopUp
 from gameover import GameOver
 import pygame
+import time
 import sys
 
 
@@ -84,10 +85,15 @@ def game_loop():
         if not tictactoe.game_finished:
             tictactoe.handle_mousemotion()
             tictactoe.handle_moves()
-            tictactoe.get_winner()
 
         # Update display
         redraw_game()
+
+        # Get winner
+        winner = tictactoe.get_winner()
+        if winner == "O":
+            time.sleep(0.8)
+            gameover_loop()
 
     pygame.quit()
     sys.exit()
@@ -198,4 +204,4 @@ if __name__ == "__main__":
     gameover = GameOver()
 
     # Execute
-    gameover_loop()
+    menu_loop()

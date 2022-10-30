@@ -89,15 +89,15 @@ class TicTacToe:
     def get_winner(self):
         winner = self.board.winner()
         if winner is not None:  # check who won
-            print(f"{winner} WON!")
-
             self.reset_overdetection()
             self.game_finished = True
+
+            return winner
         elif self.board.num_empty_squares() <= 0:  # check if draw
-            print("DRAW!")
-
             self.reset_overdetection()
             self.game_finished = True
+
+            return "DRAW"
 
     # Reset
     def reset_overdetection(self):

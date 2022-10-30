@@ -43,6 +43,9 @@ def redraw_gameover():
     # Draw background
     win.fill(Colors.white)
 
+    # Draw game
+    tictactoe.draw(win)
+
     # Draw gameover
     gameover.draw(win)
 

@@ -1,4 +1,5 @@
 from window import window
+from .title import Title
 import pygame
 
 pygame.init()
@@ -14,9 +15,14 @@ class GameOver:
             ht // self.display_size_divider),
             pygame.SRCALPHA)
 
+        self.title = Title()
+
     def draw(self, display):
-        # Fill gameover's display with a transparent background
-        self.display.fill((0, 0, 0, 0))
+        # Fill gameover's display with a white opaque background
+        self.display.fill((235, 237, 233, 200))
+
+        # Draw gameover window on gameover's display
+        self.title.draw(self.display)
 
         # Blit gameover's display to original display
         resized_gameover_display = pygame.transform.scale(

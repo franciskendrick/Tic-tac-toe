@@ -1,6 +1,5 @@
 from utils import clip_set_to_list_on_yaxis
 import pygame
-import json
 import os
 
 pygame.init()
@@ -10,10 +9,6 @@ resources_path = os.path.abspath(
         "..", "..", "resources", "gameover"
         )
     )
-
-# Json
-with open(f"{resources_path}/gameover.json") as json_file:
-    gameover_data = json.load(json_file)
 
 
 class Title:
@@ -34,8 +29,7 @@ class Title:
             self.frames.append(img)
 
         # Initialize rectangle
-        self.rect = pygame.Rect(
-            gameover_data["title_position"], img.get_size())
+        self.rect = pygame.Rect((13, 20), img.get_size())
     
     def draw(self, display):
         # Reset

@@ -7,13 +7,13 @@ pygame.init()
 resources_path = os.path.abspath(
     os.path.join(
         os.path.dirname(__file__), 
-        "..", "..", "resources", "menu"
+        "..", "..", "resources", "screens"
         )
     )
 
 # Json
-with open(f"{resources_path}/menu.json") as json_file:
-    menu_data = json.load(json_file)
+with open(f"{resources_path}/screens.json") as json_file:
+    screens_data = json.load(json_file)
 
 
 class Button:
@@ -38,7 +38,7 @@ class Button:
 
         # Initialize rectangles
         rect = pygame.Rect(
-            menu_data["playbutton_position"],
+            screens_data["playbutton_position"],
             resized_image.get_rect().size)
         hitbox = pygame.Rect(
             rect.x * enlarge, rect.y * enlarge,

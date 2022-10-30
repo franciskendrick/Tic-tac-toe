@@ -163,6 +163,17 @@ def gameover_loop():
             if event.type == pygame.QUIT:
                 run = False
 
+            # GameOver buttons' down detection
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:  # left-clicked has been uped
+                is_pressed = gameover.button.button_down_detection()
+                gameover.button.reset_overdetection()
+                if is_pressed:  # button is pressed
+                    game_loop()
+
+            # GameOver buttons' over detection
+            if event.type == pygame.MOUSEMOTION:
+                gameover.button.button_over_detection()
+
         # Update display
         redraw_gameover()
         clock.tick(30)

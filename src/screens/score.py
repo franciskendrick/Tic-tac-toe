@@ -7,13 +7,13 @@ pygame.init()
 resources_path = os.path.abspath(
     os.path.join(
         os.path.dirname(__file__), 
-        "..", "..", "resources", "menu"
+        "..", "..", "resources", "screens"
         )
     )
 
 # Json
-with open(f"{resources_path}/menu.json") as json_file:
-    menu_data = json.load(json_file)
+with open(f"{resources_path}/screens.json") as json_file:
+    screens_data = json.load(json_file)
 
 
 class Score(NumberFont):
@@ -38,8 +38,8 @@ class Score(NumberFont):
                 f"{resources_path}/score_title.png"))
 
         # Positions
-        self.background_pos = menu_data["scorebkg_positions"]
-        self.title_pos = menu_data["scoretitle_positions"]
+        self.background_pos = screens_data["scorebkg_positions"]
+        self.title_pos = screens_data["scoretitle_positions"]
 
     def init_scores(self):
         # Scores
@@ -49,7 +49,7 @@ class Score(NumberFont):
         }
 
         # Positions
-        self.score_pos = menu_data["scoretxt_positions"]
+        self.score_pos = screens_data["scoretxt_positions"]
 
     # Draw
     def draw(self, display):

@@ -1,8 +1,6 @@
 from window import window
+from screens import Button, Tutorial, Score
 from .title import Title
-from .button import Button
-from .tutorial import Tutorial
-from .score import Score
 import pygame
 
 pygame.init()

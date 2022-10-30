@@ -1,4 +1,5 @@
 from window import window
+from screens import Button, Tutorial, Score
 from .title import Title
 import pygame
 
@@ -16,6 +17,9 @@ class GameOver:
             pygame.SRCALPHA)
 
         self.title = Title()
+        self.button = Button(self.display_size_divider)
+        self.tutorial = Tutorial()
+        self.score = Score()
 
     def draw(self, display):
         # Fill gameover's display with a white opaque background
@@ -23,6 +27,9 @@ class GameOver:
 
         # Draw gameover window on gameover's display
         self.title.draw(self.display)
+        self.button.draw(self.display)
+        self.tutorial.draw(self.display)
+        self.score.draw(self.display)
 
         # Blit gameover's display to original display
         resized_gameover_display = pygame.transform.scale(

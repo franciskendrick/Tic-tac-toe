@@ -91,8 +91,13 @@ def game_loop():
 
         # Get winner
         winner = tictactoe.get_winner()
-        if winner == "O":
+        if winner == "X":  # player won
             time.sleep(0.8)
+            gameover.init_title(True)
+            gameover_loop()
+        elif winner == "O":  # gameover
+            time.sleep(0.8)
+            gameover.init_title(False)
             gameover_loop()
 
     pygame.quit()
@@ -174,6 +179,7 @@ def gameover_loop():
                 is_pressed = gameover.button.button_down_detection()
                 gameover.button.reset_overdetection()
                 if is_pressed:  # button is pressed
+                    tictactoe.reset_game()
                     game_loop()
 
             # GameOver buttons' over detection

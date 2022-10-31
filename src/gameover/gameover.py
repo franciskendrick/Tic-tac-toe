@@ -16,10 +16,12 @@ class GameOver:
             ht // self.display_size_divider),
             pygame.SRCALPHA)
 
-        self.title = Title()
         self.button = Button(self.display_size_divider)
         self.tutorial = Tutorial()
         self.score = Score()
+
+    def init_title(self, player_won):
+        self.title = Title(player_won)
 
     def draw(self, display):
         # Fill gameover's display with a white opaque background

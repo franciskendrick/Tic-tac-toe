@@ -30,7 +30,7 @@ class Title:
             self.frames.append(img)
 
         # Initialize rectangle
-        pos = (22, 20) if player_won else (13, 20)
+        pos = (22, 18) if player_won else (13, 18)
         self.rect = pygame.Rect(pos, img.get_size())
     
     def draw(self, display):

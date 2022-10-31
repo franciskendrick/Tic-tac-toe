@@ -149,7 +149,7 @@ def popup_loop():
                 popup.buttons.reset_overdetection() 
                 if button_pressed == "yes":  # yes button is pressed
                     return True
-                else:  # no button is pressed
+                elif button_pressed == "no":  # no button is pressed
                     return False
 
             # PopUp buttons' over detection

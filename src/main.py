@@ -91,13 +91,9 @@ def game_loop():
 
         # Get winner
         winner = tictactoe.get_winner()
-        if winner == "X":  # player won
+        if winner is not None:
             time.sleep(0.8)
-            gameover.init_title(True)
-            gameover_loop()
-        elif winner == "O":  # gameover
-            time.sleep(0.8)
-            gameover.init_title(False)
+            gameover.init_title(winner)
             gameover_loop()
 
     pygame.quit()

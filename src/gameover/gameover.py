@@ -20,8 +20,8 @@ class GameOver:
         self.tutorial = Tutorial()
         self.score = Score()
 
-    def init_title(self, player_won):
-        self.title = Title(player_won)
+    def init_title(self, winner):
+        self.title = Title(winner)
 
     def draw(self, display):
         # Fill gameover's display with a white opaque background

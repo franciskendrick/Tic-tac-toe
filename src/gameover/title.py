@@ -12,10 +12,14 @@ resources_path = os.path.abspath(
 
 
 class Title:
-    def __init__(self, player_won):
-        filename = "youwin" if player_won else "gameover"
+    def __init__(self, winner):
+        filename_switchcase = {
+            "X": "youwin",
+            "O": "gameover",
+            "DRAW": "draw"
+        }
         animation_set = pygame.image.load(
-            f"{resources_path}/{filename}_title_animation.png")
+            f"{resources_path}/{filename_switchcase[winner]}_title_animation.png")
         self.idx = 0
 
         # Get title animation's frames
@@ -30,8 +34,13 @@ class Title:
             self.frames.append(img)
 
         # Initialize rectangle
-        pos = (22, 18) if player_won else (13, 18)
-        self.rect = pygame.Rect(pos, img.get_size())
+        position_switchcase = {
+            "X": (22, 18),
+            "O": (13, 18),
+            "DRAW": (40, 18)
+        }
+        self.rect = pygame.Rect(
+            position_switchcase[winner], img.get_size())
     
     def draw(self, display):
         # Reset

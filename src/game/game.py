@@ -28,6 +28,7 @@ class TicTacToe:
 
         # Status
         self.x_turn = True
+        self.start_xtrurn = self.x_turn
         self.game_finished = False
 
     # Draw
@@ -89,14 +90,8 @@ class TicTacToe:
     def get_winner(self):
         winner = self.board.winner()
         if winner is not None:  # check who won
-            self.reset_overdetection()
-            self.game_finished = True
-
             return winner
         elif self.board.num_empty_squares() <= 0:  # check if draw
-            self.reset_overdetection()
-            self.game_finished = True
-
             return "DRAW"
 
     # Reset
@@ -109,7 +104,8 @@ class TicTacToe:
         self.board.init_board(self.display_size_divider)
 
         # Status
-        self.x_turn = True
+        self.x_turn = not self.start_xtrurn
+        self.start_xtrurn = self.x_turn
         self.game_finished = False
 
 

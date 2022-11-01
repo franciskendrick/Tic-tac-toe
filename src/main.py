@@ -92,8 +92,10 @@ def game_loop():
         # Get winner
         winner = tictactoe.get_winner()
         if winner is not None:
+            tictactoe.reset_overdetection()
             time.sleep(0.8)
             gameover.init_title(winner)
+            tictactoe.game_finished = True
             gameover_loop()
 
     pygame.quit()

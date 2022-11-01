@@ -64,6 +64,7 @@ def game_loop():
         for event in pygame.event.get():
             # Quit detection
             if event.type == pygame.QUIT:
+                screen.scoreboard.update_jsonscore()
                 run = False
 
             # Key detection
@@ -104,7 +105,7 @@ def game_loop():
             gameover.init_title(winner)
 
             # Update scoreboard
-            if winner is not "DRAW":
+            if winner != "DRAW":
                 screen.scoreboard.scores[winner] += 1
 
             # Pause
@@ -125,6 +126,7 @@ def menu_loop():
         for event in pygame.event.get():
             # Quit detection
             if event.type == pygame.QUIT:
+                screen.scoreboard.update_jsonscore()
                 run = False
 
             # Menu buttons' down detection
@@ -154,6 +156,7 @@ def popup_loop():
         for event in pygame.event.get():
             # Quit detection
             if event.type == pygame.QUIT:
+                screen.scoreboard.update_jsonscore()
                 run = False
 
             # PopUp buttons' down detection
@@ -185,6 +188,7 @@ def gameover_loop():
         for event in pygame.event.get():
             # Quit detection
             if event.type == pygame.QUIT:
+                screen.scoreboard.update_jsonscore()
                 run = False
 
             # GameOver buttons' down detection

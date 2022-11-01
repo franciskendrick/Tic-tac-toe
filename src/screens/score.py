@@ -64,6 +64,12 @@ class Score(NumberFont):
             self.render_font(
                 display, self.format_score(str(score).zfill(7)), pos)
 
+    # Update
+    def update_jsonscore(self):
+        # Dump score to the JSON file
+        with open(f"{resources_path}/scores.json", "w") as json_file:
+            json.dump(self.scores, json_file)
+
     # Format function/s
     def format_score(self, score, index=3):
         new_score = score[:-index] + "," + score[-index:]

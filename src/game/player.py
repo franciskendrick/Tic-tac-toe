@@ -15,10 +15,10 @@ class HumanPlayer:
                 # Loop over every box in board until hovered box is found
                 mouse_pos = pygame.mouse.get_pos()
 
-                for i, (*_, hitbox) in enumerate(board):
+                for i, (*_, hitbox) in enumerate(board.board):
                     # Check value variable
-                    if hitbox.collidepoint(*mouse_pos):
-                        board[i][0] = self.user_letter  # value
+                    if hitbox.collidepoint(*mouse_pos) and i in board.available_moves():
+                        board.board[i][0] = self.user_letter  # value
                         return i
         return None
 

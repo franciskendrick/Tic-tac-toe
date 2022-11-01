@@ -74,7 +74,7 @@ class TicTacToe:
 
     def handle_moves(self):
         if self.x_turn:
-            move = self.human_player.handle_mousedown(self.board.board)
+            move = self.human_player.handle_mousedown(self.board)
             if move != None:
                 self.board.board[move][0] = "X"
                 self.x_turn = False

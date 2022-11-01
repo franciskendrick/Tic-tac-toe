@@ -1,5 +1,5 @@
 from window import window
-from screens import Button, Tutorial, Score
+from screens import screen
 from .title import Title
 import pygame
 
@@ -17,9 +17,6 @@ class Menu:
             pygame.SRCALPHA)
 
         self.title = Title()
-        self.button = Button(self.display_size_divider)
-        self.tutorial = Tutorial()
-        self.score = Score()
 
     def draw(self, display):
         # Fill menu's display with a transparent background
@@ -27,9 +24,7 @@ class Menu:
 
         # Draw menu window on menu's display
         self.title.draw(self.display)
-        self.button.draw(self.display)
-        self.tutorial.draw(self.display)
-        self.score.draw(self.display)
+        screen.draw(self.display)
 
         # Blit menu's display to original display
         resized_menu_display = pygame.transform.scale(

@@ -1,5 +1,6 @@
 from utils import Colors
 from window import window
+from screens import screen
 from game import TicTacToe
 from menu import Menu
 from popup import PopUp
@@ -93,11 +94,23 @@ def game_loop():
         # Get winner
         winner = tictactoe.get_winner()
         if winner is not None:
+            # Reset game's mouse over detection
             tictactoe.reset_overdetection()
+
+            # Update display
             redraw_game()
+
+            # Initialize gameover's title
             gameover.init_title(winner)
+
+            # Update scoreboard
+            if winner is not "DRAW":
+                screen.scoreboard.scores[winner] += 1
+
+            # Pause
             time.sleep(0.8)
-            
+
+            # Redirect to gameover loop            
             gameover_loop()
 
     pygame.quit()
@@ -116,14 +129,14 @@ def menu_loop():
 
             # Menu buttons' down detection
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:  # left-clicked has been uped
-                is_pressed = menu.button.button_down_detection()
-                menu.button.reset_overdetection()
+                is_pressed = screen.button.button_down_detection()
+                screen.button.reset_overdetection()
                 if is_pressed:  # button is pressed
                     game_loop()
 
             # Menu buttons' over detection
             if event.type == pygame.MOUSEMOTION:
-                menu.button.button_over_detection()
+                screen.button.button_over_detection()
 
         # Update display
         redraw_menu()
@@ -176,15 +189,15 @@ def gameover_loop():
 
             # GameOver buttons' down detection
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:  # left-clicked has been uped
-                is_pressed = gameover.button.button_down_detection()
-                gameover.button.reset_overdetection()
+                is_pressed = screen.button.button_down_detection()
+                screen.button.reset_overdetection()
                 if is_pressed:  # button is pressed
                     tictactoe.reset_game()
                     game_loop()
 
             # GameOver buttons' over detection
             if event.type == pygame.MOUSEMOTION:
-                gameover.button.button_over_detection()
+                screen.button.button_over_detection()
 
             # Key detection
             if event.type == pygame.KEYDOWN:

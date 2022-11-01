@@ -43,11 +43,9 @@ class Score(NumberFont):
 
     def init_scores(self):
         # Scores
-        self.scores = {
-            "player": 0,
-            "venice": 0
-        }
-
+        with open(f"{resources_path}/scores.json") as json_file:
+            self.scores = json.load(json_file)
+        
         # Positions
         self.score_pos = screens_data["scoretxt_positions"]
 

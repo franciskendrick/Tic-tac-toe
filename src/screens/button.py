@@ -1,4 +1,5 @@
 from utils import palette_swap
+from window import window
 import pygame
 import json
 import os
@@ -10,6 +11,9 @@ resources_path = os.path.abspath(
         "..", "..", "resources", "screens"
         )
     )
+
+# Window
+pygame.display.set_mode(window.rect.size)
 
 # Json
 with open(f"{resources_path}/screens.json") as json_file:

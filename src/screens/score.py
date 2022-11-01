@@ -61,8 +61,7 @@ class Score(NumberFont):
 
         # Scores
         for score, pos in zip(self.scores.values(), self.score_pos.values()):
-            self.render_font(
-                display, self.format_score(str(score).zfill(7)), pos)
+            self.render_font(display, f"{score:,}", pos)
 
     # Update
     def update_jsonscore(self):

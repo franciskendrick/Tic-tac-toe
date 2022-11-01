@@ -29,7 +29,6 @@ class TicTacToe:
         # Status
         self.x_turn = True
         self.start_xtrurn = self.x_turn
-        self.game_finished = False
 
     # Draw
     def draw(self, display):
@@ -54,7 +53,7 @@ class TicTacToe:
 
     # Handle 
     def handle_mousemotion(self):
-        if pygame.mouse.get_focused():  # mouse is INSIDE the pygame window
+        if pygame.mouse.get_focused() and self.x_turn:  # mouse is INSIDE the pygame window AND X's turn
             self.ishovered_off = False
 
             # Loop over every box in board and update is_hovered variable
@@ -65,7 +64,7 @@ class TicTacToe:
                     self.board.board[i][1] = True  # is hovered
                 else:
                     self.board.board[i][1] = False  # is hovered
-        elif not pygame.mouse.get_focused():  # mouse is OUTSIDE the pygame window
+        elif not pygame.mouse.get_focused() or not self.x_turn:  # mouse is OUTSIDE the pygame window OR O's turn
             if not self.ishovered_off:
                 self.ishovered_off = True
 
@@ -106,7 +105,6 @@ class TicTacToe:
         # Status
         self.x_turn = not self.start_xtrurn
         self.start_xtrurn = self.x_turn
-        self.game_finished = False
 
 
 class Board(LetterFont):

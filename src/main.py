@@ -81,21 +81,23 @@ def game_loop():
                     else:
                         game_loop()
 
-        # Handle tic-tac-toe board
-        if not tictactoe.game_finished:
-            tictactoe.handle_mousemotion()
-            tictactoe.handle_moves()
+        # Handle mouse motion
+        tictactoe.handle_mousemotion()
 
         # Update display
         redraw_game()
+
+        # Handle moves
+        tictactoe.handle_moves()
 
         # Get winner
         winner = tictactoe.get_winner()
         if winner is not None:
             tictactoe.reset_overdetection()
-            time.sleep(0.8)
+            redraw_game()
             gameover.init_title(winner)
-            tictactoe.game_finished = True
+            time.sleep(0.8)
+            
             gameover_loop()
 
     pygame.quit()

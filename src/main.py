@@ -8,6 +8,7 @@ from gameover import GameOver
 import pygame
 import time
 import sys
+import os
 
 
 # Redraws
@@ -223,10 +224,19 @@ def gameover_loop():
 # Execute
 if __name__ == "__main__":
     pygame.init()
+    resources_path = os.path.abspath(
+        os.path.join(
+            os.path.dirname(__file__),
+            "..", "resources"
+        )
+    )
+    print(resources_path)
     
     # Initialize window
     win = pygame.display.set_mode(window.rect.size)
     pygame.display.set_caption("Tic-Tac-Toe")
+    pygame.display.set_icon(
+        pygame.image.load(f"{resources_path}/icon.png"))
     clock = pygame.time.Clock()
 
     # Initialize windows

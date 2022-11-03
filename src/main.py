@@ -230,7 +230,6 @@ if __name__ == "__main__":
             "..", "resources"
         )
     )
-    print(resources_path)
     
     # Initialize window
     win = pygame.display.set_mode(window.rect.size)
